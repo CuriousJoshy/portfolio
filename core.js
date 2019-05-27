@@ -8,27 +8,27 @@ function E(selector, parent)
 function create(name, options)
 {
     let elem = document.createElement(name);
-    
+
     if(options)
     {
-        for(var i in options)
-        {
-            if(i == "attributes")
-                continue;
-            
-            elem[i] = options[i];
-        }
+    for(var i in options)
+    {
+        if(i == "attributes")
+            continue;
         
-        if(options.attributes)
-        {
-            for(var i in attributes)
-            {
-                elem.setAttribute(i, attributes[i]);
-            }
-        }
+        elem[i] = options[i];
     }
     
-    return elem;
+    if(options.attributes)
+    {
+        for(var i in attributes)
+        {
+            elem.setAttribute(i, attributes[i]);
+        }
+    }
+}
+
+return elem;
 }
 
 // Initialize constants, element references
@@ -58,7 +58,7 @@ function populateTableOfContents()
             innerHTML: `<a href="#${section.id}" class="section-link-text">${displayName}</a>`
         });
     };
-    
+
     sections.forEach((section) => {                
         let s_link = createSectionLink(section);
                 
@@ -69,13 +69,13 @@ function populateTableOfContents()
         subSections.forEach((sub) => {
            toc.appendChild(createSectionLink(sub, true)); 
         });
-    });;
+    });
 }
 
 function stickyTableOfContents()
 {    
     let cl = toc.classList, scroll = window.scrollY || window.pageYOffset;
-    
+
     cl.toggle("sticky", scroll > header.offsetHeight);
 }
 
@@ -83,8 +83,8 @@ function stickyTableOfContents()
 
 addEventListener("load", () => {
     createElementReferences();
-    
+
     populateTableOfContents();
-    
+
     addEventListener("scroll", stickyTableOfContents);
 });
