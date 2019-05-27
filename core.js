@@ -33,10 +33,16 @@ function create(name, options)
 
 // Initialize constants, element references
 
-const DOC = document, WIDTH = window.innerWidth;
+var DOC, WIDTH, header, toc;
 
-const header = E(".header")[0];
-const toc = E(".table-of-contents")[0];
+function createElementReferences()
+{
+    DOC = document;
+    WIDTH = window.innerWidth;
+
+    header = E(".header")[0];
+    toc = E(".table-of-contents")[0];
+}
 
 // Populate table of contents
 
@@ -75,6 +81,10 @@ function stickyTableOfContents()
 
 // Create event listeners
 
-addEventListener("load", populateTableOfContents);
-
-addEventListener("scroll", stickyTableOfContents);
+addEventListener("load", () => {
+    createElementReferences();
+    
+    populateTableOfContents();
+    
+    addEventListener("scroll", stickyTableOfContents);
+});
